@@ -29,7 +29,7 @@ roomRouter.post("/", async (req, res) => {
     res.status(201).send(newRoomForMongo);
   } catch (error) {
     console.log(error);
-    res.send(error.message);
+    res.status(400).send(error.message);
   }
 });
 

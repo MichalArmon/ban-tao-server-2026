@@ -9,8 +9,6 @@ const roomSchema = new Schema(
     maxGuests: Number,
     sizeM2: Number,
     bedType: String,
-    priceBase: Number,
-    currency: { type: String, default: "USD" },
 
     stock: { type: Number, default: 1 },
   },
