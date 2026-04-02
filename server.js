@@ -7,12 +7,13 @@ import { connectToDB } from "./DB/dbService.js";
 import treatmentRouter from "./treatments/routes/treatmentsController.js";
 import cors from "cors";
 import workshopRouter from "./workshops/routes/workshopsController.js";
+import userRouter from "./users/routes/userController.js";
 
 const app = express();
 const port = 8000;
 app.use(cors());
 app.use(express.json());
-
+app.use("/users", userRouter);
 app.use("/uploads", uploadsRoutes);
 app.use("/rooms", roomRouter);
 app.use("/treatments", treatmentRouter);
