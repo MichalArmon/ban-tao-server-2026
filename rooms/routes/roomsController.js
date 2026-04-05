@@ -69,4 +69,14 @@ roomRouter.delete("/:id", async (req, res) => {
   }
 });
 
+// ✔️✔️AVAILABILITY✔️✔️
+const checkRoomAvailability = (req, res) => {
+  const { checkIn, checkOut } = req.query;
+  if (!checkIn || !checkOut) {
+    return res
+      .status(400)
+      .send("Please provide both checkIn and checkOut dates");
+  }
+};
+
 export default roomRouter;
