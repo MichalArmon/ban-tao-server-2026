@@ -6,6 +6,7 @@ const generateToken = (user) => {
     {
       name: user.firstName,
       _id: user._id,
+      birthDate: user.birthDate,
 
       isAdmin: user.isAdmin,
     },

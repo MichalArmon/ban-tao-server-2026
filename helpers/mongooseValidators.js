@@ -29,3 +29,15 @@ export const PHONE = {
   required: true,
   match: RegExp(/0[0-9]{1,2}\-?\s?[0-9]{3}\s?[0-9]{4}/),
 };
+
+export const VIEW = {
+  type: String,
+  enum: ["Sea", "Pool", "Garden", "Mountain", "None"],
+  default: "Garden",
+};
+
+export const ROOM_TYPE = {
+  type: String,
+  required: true,
+  enum: ["Single", "Double", "Suite", "Shared", "Studio"],
+};
