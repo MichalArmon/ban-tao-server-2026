@@ -1,3 +1,4 @@
+import { generateToken } from "../../auth/providers/jwtProvider.js";
 import { generatePassword, comparePassword } from "../../bcrypt.js";
 import {
   createUser,
@@ -48,7 +49,10 @@ export const createUserService = async (newUser) => {
 
 export const loginService = async (email, password) => {
   const user = await getOneByEmail(email);
-  if (comparePassword(password, user?.password)) return user;
+  if (comparePassword(password, user?.password)) {
+    const token = generateToken(user);
+    return { user, token };
+  }
 };
 
 // 💼💼update💼💼

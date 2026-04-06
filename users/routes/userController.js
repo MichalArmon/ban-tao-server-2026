@@ -37,9 +37,9 @@ userRouter.post("/", async (req, res) => {
 userRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await loginService(email, password);
+    const loginResult = await loginService(email, password);
 
-    res.status(200).send(user);
+    res.status(200).send(loginResult.token);
   } catch (error) {
     res.status(401).json({ message: "email or password are not correct" });
   }
