@@ -9,6 +9,7 @@ import cors from "cors";
 import workshopRouter from "./workshops/routes/workshopsController.js";
 import userRouter from "./users/routes/userController.js";
 import roomReservationRouter from "./roomReservation/routes/roomsReservationsController.js";
+import orderRouter from "./orders/routes/ordersController.js";
 
 const app = express();
 const port = 8000;
@@ -20,6 +21,7 @@ app.use("/rooms", roomRouter);
 app.use("/treatments", treatmentRouter);
 app.use("/workshops", workshopRouter);
 app.use("/room-reservations", roomReservationRouter);
+app.use("/orders", orderRouter);
 
 app.listen(port, () => {
   console.log(`Listing to port ${port}!`);

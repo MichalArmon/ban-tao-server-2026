@@ -6,7 +6,13 @@ const roomReservationSchema = new Schema(
     userId: { type: Schema.Types.ObjectId, required: true },
     checkIn: { type: Date, required: true },
     checkOut: { type: Date, required: true },
-    guestsCount: { type: Number, required: true },
+    guestsCount: { type: Number },
+    status: {
+      type: String,
+      enum: ["pending", "confirmed", "cancelled"],
+      default: "pending",
+    },
+    // orderId: ObjectId,
   },
   { timestamps: true },
 );
