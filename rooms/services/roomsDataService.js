@@ -1,6 +1,6 @@
 import Room from "../models/Room.js";
 
-// 💼💼get all💼💼
+// 📊📊get all📊📊
 export const getAllRooms = async () => {
   try {
     const rooms = await Room.find().lean();
@@ -11,7 +11,7 @@ export const getAllRooms = async () => {
   }
 };
 
-// 💼💼get one by id💼💼
+// 📊📊get one by id📊📊
 export const getOneById = async (id) => {
   try {
     const room = await Room.findById(id);
@@ -21,7 +21,7 @@ export const getOneById = async (id) => {
     return null;
   }
 };
-// 💼💼create💼💼
+// 📊📊create📊📊
 export const createRoom = async (newRoom) => {
   try {
     const newRoomForDb = new Room(newRoom);
@@ -32,7 +32,7 @@ export const createRoom = async (newRoom) => {
     throw error;
   }
 };
-// 💼💼update💼💼
+// 📊📊update📊📊
 export const updateRoom = async (id, payload) => {
   try {
     const updatedRoom = await Room.findByIdAndUpdate(id, payload, {
@@ -44,7 +44,7 @@ export const updateRoom = async (id, payload) => {
     throw error;
   }
 };
-// 💼💼delete💼💼
+// 📊📊delete📊📊
 export const deleteRoom = async (id) => {
   try {
     await Room.findByIdAndDelete(id);

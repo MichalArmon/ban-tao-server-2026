@@ -6,7 +6,7 @@ import {
   updateWorkshop,
 } from "./workshopsDataService.js";
 
-// 📊📉get all📊📉
+// 💼💼get all💼💼
 export const getAllWorkshopsService = async () => {
   try {
     const workshops = await getAllWorkshops();
@@ -17,7 +17,7 @@ export const getAllWorkshopsService = async () => {
   }
 };
 
-// 📊📉get one by id📊📉
+// 💼💼get one by id💼💼
 export const getOneByIdService = async (id) => {
   try {
     const workshop = await getOneById(id);
@@ -27,7 +27,7 @@ export const getOneByIdService = async (id) => {
     return null;
   }
 };
-// 📊📉create📊📉
+// 💼💼create💼💼
 export const createWorkshopService = async (newWorkshop) => {
   try {
     const newWorkshopForController = await createWorkshop(newWorkshop);
@@ -38,7 +38,7 @@ export const createWorkshopService = async (newWorkshop) => {
   }
 };
 
-// 📊📉update📊📉
+// 💼💼update💼💼
 export const updateWorkshopService = async (id, payload) => {
   try {
     const updatedWorkshop = await updateWorkshop(id, payload);
@@ -49,7 +49,7 @@ export const updateWorkshopService = async (id, payload) => {
   }
 };
 
-// 📊📉delete📊📉
+// 💼💼delete💼💼
 export const deleteWorkshopService = async (id) => {
   try {
     await deleteWorkshop(id);

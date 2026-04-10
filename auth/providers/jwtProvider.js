@@ -8,7 +8,7 @@ const generateToken = (user) => {
       _id: user._id,
       birthDate: user.birthDate,
 
-      isAdmin: user.isAdmin,
+      role: user.role,
     },
     secretWord,
   );

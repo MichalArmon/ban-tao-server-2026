@@ -24,7 +24,7 @@ export const auth = (req, res, next) => {
 };
 
 export const isAdmin = (req, res, next) => {
-  if (!req.user || !req.user.isAdmin) {
+  if (!req.user || !req.user.role === "admin") {
     return res
       .status(403)
       .send("Access denied: Only admin can perform this action!");

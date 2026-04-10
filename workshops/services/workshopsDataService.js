@@ -1,6 +1,6 @@
 import Workshop from "../models/Workshop.js";
 
-// 💼💼get all💼💼
+// 📊📊get all📊📊
 export const getAllWorkshops = async () => {
   try {
     const workshops = await Workshop.find().lean();
@@ -11,7 +11,7 @@ export const getAllWorkshops = async () => {
   }
 };
 
-// 💼💼get one by id💼💼
+// 📊📊get one by id📊📊
 export const getOneById = async (id) => {
   try {
     const workshop = await Workshop.findById(id);
@@ -21,7 +21,7 @@ export const getOneById = async (id) => {
     return null;
   }
 };
-// 💼💼create💼💼
+// 📊📊create📊📊
 export const createWorkshop = async (newWorkshop) => {
   try {
     const newWorkshopForDb = new Workshop(newWorkshop);
@@ -32,7 +32,7 @@ export const createWorkshop = async (newWorkshop) => {
     throw error;
   }
 };
-// 💼💼update💼💼
+// 📊📊update📊📊
 export const updateWorkshop = async (id, payload) => {
   try {
     const updatedWorkshop = await Workshop.findByIdAndUpdate(id, payload, {
@@ -44,7 +44,7 @@ export const updateWorkshop = async (id, payload) => {
     throw error;
   }
 };
-// 💼💼delete💼💼
+// 📊📊delete📊📊
 export const deleteWorkshop = async (id) => {
   try {
     await Workshop.findByIdAndDelete(id);

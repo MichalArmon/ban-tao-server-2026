@@ -6,7 +6,7 @@ import {
   updateTreatment,
 } from "./treatmentsDataService.js";
 
-// 📊📉get all📊📉
+// 💼💼get all💼💼
 export const getAllTreatmentsService = async () => {
   try {
     const treatments = await getAllTreatments();
@@ -17,7 +17,7 @@ export const getAllTreatmentsService = async () => {
   }
 };
 
-// 📊📉get one by id📊📉
+// 💼💼get one by id💼💼
 export const getOneByIdService = async (id) => {
   try {
     const treatment = await getOneById(id);
@@ -27,7 +27,7 @@ export const getOneByIdService = async (id) => {
     return null;
   }
 };
-// 📊📉create📊📉
+// 💼💼create💼💼
 export const createTreatmentService = async (newTreatment) => {
   try {
     const newTreatmentForController = await createTreatment(newTreatment);
@@ -38,7 +38,7 @@ export const createTreatmentService = async (newTreatment) => {
   }
 };
 
-// 📊📉update📊📉
+// 💼💼update💼💼
 export const updateTreatmentService = async (id, payload) => {
   try {
     const updatedTreatment = await updateTreatment(id, payload);
@@ -49,7 +49,7 @@ export const updateTreatmentService = async (id, payload) => {
   }
 };
 
-// 📊📉delete📊📉
+// 💼💼delete💼💼
 export const deleteTreatmentService = async (id) => {
   try {
     await deleteTreatment(id);

@@ -6,7 +6,7 @@ import {
   updateRoom,
 } from "./roomsDataService.js";
 
-// 📊📉get all📊📉
+// 💼💼get all💼💼
 export const getAllRoomsService = async () => {
   try {
     const rooms = await getAllRooms();
@@ -17,7 +17,7 @@ export const getAllRoomsService = async () => {
   }
 };
 
-// 📊📉get one by id📊📉
+// 💼💼get one by id💼💼
 export const getOneByIdService = async (id) => {
   try {
     const room = await getOneById(id);
@@ -27,7 +27,7 @@ export const getOneByIdService = async (id) => {
     return null;
   }
 };
-// 📊📉create📊📉
+// 💼💼create💼💼
 export const createRoomService = async (newRoom) => {
   try {
     const newRoomForController = await createRoom(newRoom);
@@ -38,7 +38,7 @@ export const createRoomService = async (newRoom) => {
   }
 };
 
-// 📊📉update📊📉
+// 💼💼update💼💼
 export const updateRoomService = async (id, payload) => {
   try {
     const updatedRoom = await updateRoom(id, payload);
@@ -49,7 +49,7 @@ export const updateRoomService = async (id, payload) => {
   }
 };
 
-// 📊📉delete📊📉
+// 💼💼delete💼💼
 export const deleteRoomService = async (id) => {
   try {
     await deleteRoom(id);

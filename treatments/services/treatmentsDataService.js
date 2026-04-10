@@ -1,6 +1,6 @@
 import Treatment from "../models/Treatment.js";
 
-// 💼💼get all💼💼
+// 📊📊get all📊📊
 export const getAllTreatments = async () => {
   try {
     const treatments = await Treatment.find().lean();
@@ -11,7 +11,7 @@ export const getAllTreatments = async () => {
   }
 };
 
-// 💼💼get one by id💼💼
+// 📊📊get one by id📊📊
 export const getOneById = async (id) => {
   try {
     const treatment = await Treatment.findById(id);
@@ -21,7 +21,7 @@ export const getOneById = async (id) => {
     return null;
   }
 };
-// 💼💼create💼💼
+// 📊📊create📊📊
 export const createTreatment = async (newTreatment) => {
   try {
     const newTreatmentForDb = new Treatment(newTreatment);
@@ -32,7 +32,7 @@ export const createTreatment = async (newTreatment) => {
     throw error;
   }
 };
-// 💼💼update💼💼
+// 📊📊update📊📊
 export const updateTreatment = async (id, payload) => {
   try {
     const updatedTreatment = await Treatment.findByIdAndUpdate(id, payload, {
@@ -45,7 +45,7 @@ export const updateTreatment = async (id, payload) => {
   }
 };
 
-// 💼💼delete💼💼
+// 📊📊delete📊📊
 export const deleteTreatment = async (id) => {
   try {
     await Treatment.findByIdAndDelete(id);

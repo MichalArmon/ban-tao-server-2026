@@ -12,7 +12,7 @@ const orderSchema = new Schema({
   spaReservations: [
     { type: Schema.Types.ObjectId, ref: "TreatmentReservation" },
   ],
-  yogaReservations: [{ type: Schema.Types.ObjectId, ref: "Workshop" }],
+  studioReservations: [{ type: Schema.Types.ObjectId, ref: "Workshop" }],
 
   totalPrice: { type: Number, required: true },
   currency: { type: String, default: "USA" },
