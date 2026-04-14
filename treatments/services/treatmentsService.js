@@ -2,7 +2,7 @@ import {
   createTreatment,
   deleteTreatment,
   getAllTreatments,
-  getOneById,
+  getOneTreatmentById,
   updateTreatment,
 } from "./treatmentsDataService.js";
 
@@ -20,7 +20,7 @@ export const getAllTreatmentsService = async () => {
 // 💼💼get one by id💼💼
 export const getOneByIdService = async (id) => {
   try {
-    const treatment = await getOneById(id);
+    const treatment = await getOneTreatmentById(id);
     return treatment;
   } catch (error) {
     console.log(error);

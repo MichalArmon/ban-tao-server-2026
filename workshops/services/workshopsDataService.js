@@ -12,7 +12,7 @@ export const getAllWorkshops = async () => {
 };
 
 // 📊📊get one by id📊📊
-export const getOneById = async (id) => {
+export const getOneWorkshopById = async (id) => {
   try {
     const workshop = await Workshop.findById(id);
     return workshop;

@@ -19,10 +19,8 @@ const sessionSchema = new Schema(
       required: true,
     },
 
-    // ניהול קיבולת (יכול להיות שונה מה-default של התבנית)
     maxCapacity: { type: Number, required: true },
 
-    // רשימת המשתתפים שנרשמו לסשן הספציפי הזה
     enrolledUsers: [
       {
         userId: { type: Schema.Types.ObjectId, ref: "user" },
@@ -35,6 +33,7 @@ const sessionSchema = new Schema(
       enum: ["scheduled", "cancelled", "completed"],
       default: "scheduled",
     },
+    isRecursive: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

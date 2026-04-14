@@ -2,7 +2,7 @@ import {
   createWorkshop,
   deleteWorkshop,
   getAllWorkshops,
-  getOneById,
+  getOneWorkshopById,
   updateWorkshop,
 } from "./workshopsDataService.js";
 
@@ -20,7 +20,7 @@ export const getAllWorkshopsService = async () => {
 // 💼💼get one by id💼💼
 export const getOneByIdService = async (id) => {
   try {
-    const workshop = await getOneById(id);
+    const workshop = await getOneWorkshopById(id);
     return workshop;
   } catch (error) {
     console.log(error);

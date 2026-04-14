@@ -12,7 +12,7 @@ export const getAllTreatments = async () => {
 };
 
 // 📊📊get one by id📊📊
-export const getOneById = async (id) => {
+export const getOneTreatmentById = async (id) => {
   try {
     const treatment = await Treatment.findById(id);
     return treatment;
