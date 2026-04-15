@@ -55,6 +55,7 @@ recurringRuleRouter.put("/:id", async (req, res) => {
     const updatedRecurringRule = await updateRecurringRuleService(id, payload);
     res.status(200).send(updatedRecurringRule);
   } catch (error) {
+    res.status(500).send(error.message || "Internal Server Error");
     console.log(error);
   }
 });

@@ -1,3 +1,4 @@
+import Session from "../../sessions/models/Session.js";
 import { createSessionService } from "../../sessions/services/sessionsService.js";
 import {
   createRecurringRule,
@@ -6,6 +7,44 @@ import {
   getOneById,
   updateRecurringRule,
 } from "./recurringRulesDataService.js";
+
+// פונקציית עזר: מקבלת נתונים של חוק ואת ה-ID שלו, ומייצרת את הסשנים
+const generateSessionsForRule = async (ruleData, ruleId) => {
+  const {
+    startDate,
+    endDate,
+    daysOfWeek,
+    hour,
+    workshopId,
+    location,
+    maxCapacity,
+  } = ruleData;
+
+  let current = new Date(startDate);
+  const end = new Date(endDate);
+  const createdSessions = [];
+
+  while (current <= end) {
+    if (daysOfWeek.includes(current.getDay())) {
+      const sessionStart = new Date(current);
+      const [hh, mm] = hour.split(":");
+      sessionStart.setHours(parseInt(hh), parseInt(mm), 0);
+
+      const newSession = await createSessionService({
+        workshopId,
+        startTime: sessionStart,
+        location,
+        maxCapacity,
+        ruleId: ruleId, // משתמשים ב-ID שקיבלנו
+      });
+
+      createdSessions.push(newSession);
+    }
+    current.setDate(current.getDate() + 1);
+  }
+
+  return createdSessions;
+};
 
 // 💼💼get all💼💼
 export const getAllRecurringRulesService = async () => {
@@ -34,42 +73,9 @@ export const createRecurringRuleService = async (data) => {
     // 1. שמירת החוק ב-DB
     const newRule = await createRecurringRule(data);
 
-    // 2. לוגיקה ליצירת הסשנים (הלולאה המוכרת שלנו)
-    const {
-      startDate,
-      endDate,
-      daysOfWeek,
-      hour,
-      workshopId,
-      location,
-      maxCapacity,
-    } = data;
+    // 2. קוראים לפונקציית העזר לייצור הסשנים
+    const createdSessions = await generateSessionsForRule(data, newRule._id);
 
-    let current = new Date(startDate);
-    const end = new Date(endDate);
-    const createdSessions = [];
-
-    while (current <= end) {
-      if (daysOfWeek.includes(current.getDay())) {
-        const sessionStart = new Date(current);
-        const [hh, mm] = hour.split(":");
-        sessionStart.setHours(parseInt(hh), parseInt(mm), 0);
-
-        // יצירת סשן בודד וקישורו לחוק החדש
-        const newSession = await createSessionService({
-          workshopId,
-          startTime: sessionStart,
-          location,
-          maxCapacity,
-          ruleId: newRule._id, // הנה הקישור!
-        });
-
-        createdSessions.push(newSession);
-      }
-      current.setDate(current.getDate() + 1);
-    }
-
-    // מחזירים גם את החוק וגם את כמות הסשנים שנוצרו
     return { rule: newRule, sessionsCount: createdSessions.length };
   } catch (error) {
     console.log(error);
@@ -81,7 +87,15 @@ export const createRecurringRuleService = async (data) => {
 export const updateRecurringRuleService = async (id, payload) => {
   try {
     const updatedRecurringRule = await updateRecurringRule(id, payload);
-    return updatedRecurringRule;
+    await Session.deleteMany({ ruleId: id });
+    const createdSessions = await generateSessionsForRule(
+      updatedRecurringRule,
+      id,
+    );
+    return {
+      rule: updatedRecurringRule,
+      sessionsCount: createdSessions.length,
+    };
   } catch (error) {
     console.log(error);
     throw error;

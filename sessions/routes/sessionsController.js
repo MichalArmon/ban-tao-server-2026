@@ -77,6 +77,7 @@ sessionRouter.put("/:id", async (req, res) => {
     const updatedSession = await updateSessionService(id, payload);
     res.status(200).send(updatedSession);
   } catch (error) {
+    res.status(404);
     console.log(error);
   }
 });

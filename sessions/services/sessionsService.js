@@ -32,7 +32,6 @@ export const getOneByIdService = async (id) => {
 export const createSessionService = async (newSession) => {
   try {
     const workshop = await getOneWorkshopById(newSession.workshopId);
-    console.log(workshop);
 
     const startTime = new Date(newSession.startTime);
     const duration = workshop.duration;
