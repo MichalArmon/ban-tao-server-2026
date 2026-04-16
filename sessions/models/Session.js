@@ -8,11 +8,6 @@ const sessionSchema = new Schema(
       ref: "workshop",
       required: true,
     },
-    ruleId: {
-      type: Schema.Types.ObjectId,
-      ref: "rule", // שימי לב: ודאי שככה קוראים למודל של החוקים אצלך ("rule" או "recurringRule")
-      required: false, // חשוב מאוד שזה יהיה false! כדי שנוכל ליצור סשן בודד בלי חוק
-    },
 
     // זמן ומיקום - זה מה שמשתנה מסשן לסשן
     startTime: { type: Date, required: true },

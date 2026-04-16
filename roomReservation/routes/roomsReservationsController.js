@@ -25,12 +25,12 @@ roomReservationRouter.post("/", async (req, res) => {
     await newReservation.save();
 
     res.status(201).json({
-      message: "ההזמנה לחדר נקלטה בהצלחה!",
+      message: "Room reservation created successfully!",
       reservation: newReservation,
     });
   } catch (error) {
-    console.error("שגיאה ביצירת הזמנה:", error);
-    res.status(500).send("שגיאת שרת - לא הצלחנו ליצור את ההזמנה");
+    console.error("Error creating reservation:", error);
+    res.status(500).send("Server error - failed to create reservation");
   }
 });
 
