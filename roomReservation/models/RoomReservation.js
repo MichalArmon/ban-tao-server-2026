@@ -12,7 +12,10 @@ const roomReservationSchema = new Schema(
       enum: ["pending", "confirmed", "cancelled"],
       default: "pending",
     },
-    // orderId: ObjectId,
+    expiresAt: {
+      type: Date,
+      required: true,
+    },
   },
   { timestamps: true },
 );

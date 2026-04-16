@@ -22,6 +22,7 @@ recurringRuleRouter.get("/", async (req, res) => {
 
 // ✔️✔️CREATE✔️✔️
 recurringRuleRouter.post("/", async (req, res) => {
+  console.log(req.body);
   const newRecurringRule = req.body;
   try {
     const newRecurringRuleForMongo =

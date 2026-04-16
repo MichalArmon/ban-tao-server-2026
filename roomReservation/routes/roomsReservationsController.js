@@ -12,13 +12,15 @@ roomReservationRouter.post("/", async (req, res) => {
         .status(400)
         .send("details are missing to create a reservation");
     }
-
+    const expiresInMinutes = 10;
     const newReservation = new RoomReservation({
       roomId: roomId,
       userId: userId,
       checkIn: new Date(checkIn),
       checkOut: new Date(checkOut),
       guestsCount: guestsCount,
+      status: "pending",
+      expiresAt: new Date(Date.now() + expiresInMinutes * 60 * 1000),
     });
     await newReservation.save();
 

@@ -53,6 +53,8 @@ roomRouter.get("/availability", async (req, res) => {
       const start = new Date(checkIn);
       const end = new Date(checkOut);
       const busyReservations = await RoomReservation.find({
+        status: { $in: ["pending", "confirmed"] },
+        $or: [{ status: "confirmed" }, { expiresAt: { $gt: now } }],
         checkIn: { $lt: end },
         checkOut: { $gt: start },
       });
