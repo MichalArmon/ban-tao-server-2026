@@ -1,44 +1,64 @@
 import express from "express";
-import SessionReservation from "../models/SessionReservation.js";
-import Session from "../../sessions/models/Session.js";
+
+import {
+  createSessionReservationService,
+  updateSessionReservationService,
+  getAllSessionReservationsService,
+  getOneByIdService,
+} from "../services/sessionReservationService.js";
 
 const sessionReservationRouter = express.Router();
 
+// ✔️✔️READ✔️✔️
+sessionReservationRouter.get("/", async (req, res) => {
+  try {
+    const sessionReservations = await getAllSessionReservationsService();
+    res.status(200).send(sessionReservations);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// ✔️✔️GET one by ID✔️✔️
+
+sessionReservationRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const sessionReservation = await getOneByIdService(id);
+    res.status(200).send(sessionReservation);
+  } catch (error) {
+    res.status(404).send("sessionReservation not found!");
+  }
+});
+
 // ✔️✔️CREATE✔️✔️
 sessionReservationRouter.post("/", async (req, res) => {
+  const newSessionReservation = req.body;
   try {
-    const { sessionId, guestsCount, userId } = req.body;
-    if (!sessionId) {
-      return res
-        .status(400)
-        .send("details are missing to create a reservation");
-    }
-    const expiresInMinutes = 10;
-    const newReservation = new SessionReservation({
-      sessionId: sessionId,
-      userId: userId,
-
-      guestsCount: guestsCount,
-      status: "pending",
-      expiresAt: new Date(Date.now() + expiresInMinutes * 60 * 1000),
-    });
-    await newReservation.save();
-    const newEnrolledUsers = { userId: userId, joinedAt: new Date() };
-    await Session.findByIdAndUpdate(
-      sessionId,
-      {
-        $push: { enrolledUsers: newEnrolledUsers },
-      },
-      { new: true },
+    const newSessionReservationForMongo = await createSessionReservationService(
+      newSessionReservation,
     );
 
-    res.status(201).json({
-      message: "Session reservation created successfully!",
-      reservation: newReservation,
-    });
+    res.status(201).send(newSessionReservationForMongo);
   } catch (error) {
-    console.error("Error creating reservation:", error);
-    res.status(500).send("Server error - failed to create reservation");
+    console.log(error);
+    res.status(400).send(error.message);
+  }
+});
+
+// ✔️✔️UPDATE✔️✔️
+
+sessionReservationRouter.put("/:id", async (req, res) => {
+  const payload = req.body;
+  const { id } = req.params;
+  try {
+    const updatedSessionReservation = await updateSessionReservationService(
+      id,
+      payload,
+    );
+    res.status(200).send(updatedSessionReservation);
+  } catch (error) {
+    console.log(error);
   }
 });
 

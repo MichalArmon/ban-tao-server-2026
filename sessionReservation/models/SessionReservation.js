@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { ParticipantDetails } from "../../helpers/subModels/participantDetails.js";
 
 const sessionReservationSchema = new Schema(
   {
@@ -15,7 +16,9 @@ const sessionReservationSchema = new Schema(
       type: Date,
       required: true,
     },
+    participantDetails: ParticipantDetails,
   },
+
   { timestamps: true },
 );
 

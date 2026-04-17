@@ -17,6 +17,7 @@ const roomReservationSchema = new Schema(
       required: true,
     },
   },
+
   { timestamps: true },
 );
 
