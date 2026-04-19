@@ -6,6 +6,7 @@ import {
   getAllRoomsService,
   getOneByIdService,
   updateRoomService,
+  getOneBySlugService,
 } from "../services/roomsService.js";
 import Room from "../models/Room.js";
 import RoomReservation from "../../roomReservation/models/RoomReservation.js";
@@ -50,6 +51,7 @@ roomRouter.get("/availability", async (req, res) => {
       roomFilter.maxGuests = { $gte: Number(guestsCount) };
     }
     if (checkIn && checkOut) {
+      const now = new Date();
       const start = new Date(checkIn);
       const end = new Date(checkOut);
       const busyReservations = await RoomReservation.find({
@@ -77,13 +79,25 @@ roomRouter.get("/availability", async (req, res) => {
 
 // ✔️✔️GET one by ID✔️✔️
 
-roomRouter.get("/:id", async (req, res) => {
+roomRouter.get("/id/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const room = await getOneByIdService(id);
     res.status(200).send(room);
   } catch (error) {
     res.status(404).send("Card not found!");
+  }
+});
+
+// ✔️✔️GET one by SLUG✔️✔️
+
+roomRouter.get("/:slug", async (req, res) => {
+  const { slug } = req.params;
+  try {
+    const room = await getOneBySlugService(slug);
+    res.status(200).send(room);
+  } catch (error) {
+    res.status(404).send("Room not found!");
   }
 });
 

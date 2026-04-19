@@ -21,6 +21,17 @@ export const getOneById = async (id) => {
     return null;
   }
 };
+// 📊📊get one by slug📊📊
+export const getOneBySlug = async (slug) => {
+  try {
+    const room = await Room.findOne({ slug: slug });
+    return room;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 // 📊📊create📊📊
 export const createRoom = async (newRoom) => {
   try {

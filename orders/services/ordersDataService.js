@@ -1,4 +1,5 @@
 import RoomReservation from "../../roomReservation/models/RoomReservation.js";
+import SessionReservation from "../../sessionReservation/models/SessionReservation.js";
 import Order from "../models/Order.js";
 
 // 📊📊get all📊📊
@@ -25,11 +26,19 @@ export const getOneById = async (id) => {
 // 📊📊create📊📊
 export const createOrder = async (newOrder) => {
   try {
-    const newOrderForDb = Order.create(newOrder);
+    const newOrderForDb = await Order.create(newOrder);
 
-    const reservationId = newOrder.roomReservations[0];
-    if (reservationId) {
-      await RoomReservation.findByIdAndUpdate(reservationId, {
+    const roomReservationId = newOrder.roomReservations?.[0];
+    const workshopReservationId = newOrder.workshopReservations?.[0];
+
+    if (roomReservationId) {
+      await RoomReservation.findByIdAndUpdate(roomReservationId, {
+        status: "confirmed",
+      });
+    }
+
+    if (workshopReservationId) {
+      await SessionReservation.findByIdAndUpdate(workshopReservationId, {
         status: "confirmed",
       });
     }

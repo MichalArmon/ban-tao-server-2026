@@ -4,6 +4,7 @@ import {
   getAllRooms,
   getOneById,
   updateRoom,
+  getOneBySlug,
 } from "./roomsDataService.js";
 
 // 💼💼get all💼💼
@@ -21,6 +22,17 @@ export const getAllRoomsService = async () => {
 export const getOneByIdService = async (id) => {
   try {
     const room = await getOneById(id);
+    return room;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+// 💼💼get one by slug💼💼
+export const getOneBySlugService = async (slug) => {
+  try {
+    const room = await getOneBySlug(slug);
     return room;
   } catch (error) {
     console.log(error);
