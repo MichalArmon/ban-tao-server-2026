@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { ExtraPreferences } from "../../helpers/subModels/extraPreferences.js";
 
 const roomReservationSchema = new Schema(
   {
@@ -16,6 +17,7 @@ const roomReservationSchema = new Schema(
       type: Date,
       required: true,
     },
+    extraPreferences: ExtraPreferences,
   },
 
   { timestamps: true },
