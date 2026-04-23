@@ -27,7 +27,7 @@ sessionReservationRouter.get("/:id", async (req, res) => {
     const sessionReservation = await getOneByIdService(id);
     res.status(200).send(sessionReservation);
   } catch (error) {
-    res.status(404).send("sessionReservation not found!");
+    res.status(404).send("session Reservation not found!");
   }
 });
 

@@ -15,7 +15,7 @@ export const getAllRoomReservations = async () => {
 export const getOneById = async (id) => {
   try {
     const roomReservation = await RoomReservation.findById(id);
-    return RoomReservation;
+    return roomReservation;
   } catch (error) {
     console.log(error);
     return null;

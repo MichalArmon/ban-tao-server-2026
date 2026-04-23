@@ -7,8 +7,48 @@ import {
   updateSessionService,
 } from "../services/sessionsService.js";
 import Session from "../models/Session.js";
+import SessionReservation from "../../sessionReservation/models/SessionReservation.js";
 
 const sessionRouter = express.Router();
+
+// ✔️✔️SESSION AVAILABILITY✔️✔️
+
+sessionRouter.get("/availability", async (req, res) => {
+  try {
+    const { startTime, workshopId } = req.query;
+
+    let sessionFilter = {};
+    if (workshopId) {
+      sessionFilter.workshopId = workshopId;
+    }
+    if (startTime) {
+      sessionFilter.startTime = { $gte: new Date(startTime) };
+    }
+
+    // 1. שולפים את כל הסשנים הפוטנציאליים
+    const potentialSessions = await Session.find(sessionFilter);
+
+    // 2. הסינון שלך: בודקים את אורך המערך מול הקיבולת
+    const availableSessions = potentialSessions.filter((session) => {
+      // אם אין יוזרים בכלל, האורך הוא 0. אחרת, בודקים את אורך המערך
+      const enrolledCount = session.enrolledUsers
+        ? session.enrolledUsers.length
+        : 0;
+
+      // משאירים רק סשנים שבהם כמות הרשומים קטנה מהמקסימום
+      return enrolledCount < session.maxCapacity;
+    });
+
+    if (!availableSessions.length) {
+      return res.status(404).send("All sessions are fully booked!");
+    }
+
+    return res.status(200).send(availableSessions);
+  } catch (error) {
+    console.log("Error in searchAvailableSessions:", error);
+    return res.status(500).send("Server Error");
+  }
+});
 
 // ✔️✔️READ✔️✔️
 sessionRouter.get("/", async (req, res) => {
@@ -90,53 +130,6 @@ sessionRouter.delete("/:id", async (req, res) => {
     res.status(200).send(id);
   } catch (error) {
     console.log(error);
-  }
-});
-
-// ✔️✔️RECURSIVE✔️✔️
-sessionRouter.post("/recursive", async (req, res) => {
-  try {
-    const {
-      workshopId,
-      startDate,
-      endDate,
-      daysOfWeek,
-      hour,
-      location,
-      maxCapacity,
-    } = req.body;
-    let current = new Date(startDate);
-    const end = new Date(endDate);
-    const createdSessions = [];
-    while (current <= end) {
-      if (daysOfWeek.includes(current.getDay())) {
-        const sessionStart = new Date(current);
-        const [hh, mm] = hour.split(":");
-        sessionStart.setHours(parseInt(hh), parseInt(mm), 0);
-        const newSession = await createSessionService({
-          workshopId,
-          startTime: sessionStart,
-          location,
-          maxCapacity,
-
-          isRecursive: true,
-          startDate,
-          endDate,
-          daysOfWeek,
-          hour,
-        });
-        createdSessions.push(newSession);
-      }
-      current.setDate(current.getDate() + 1);
-    }
-
-    res.status(201).json({
-      message: `הצלחנו! נוצרו ${createdSessions.length} סשנים בלוח הזמנים.`,
-      sessions: createdSessions,
-    });
-  } catch (error) {
-    console.error("Error creating recursive sessions:", error);
-    res.status(500).json({ error: error.message });
   }
 });
 

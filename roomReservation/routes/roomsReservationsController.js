@@ -24,10 +24,10 @@ roomReservationRouter.get("/", async (req, res) => {
 roomReservationRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const RoomReservation = await getOneByIdService(id);
-    res.status(200).send(RoomReservation);
+    const roomReservation = await getOneByIdService(id);
+    res.status(200).send(roomReservation);
   } catch (error) {
-    res.status(404).send("RoomReservation not found!");
+    res.status(404).send("Room Reservation not found!");
   }
 });
 
