@@ -1,3 +1,4 @@
+import Order from "../../orders/models/Order.js";
 import SessionReservation from "../models/SessionReservation.js";
 
 // 📊📊get all📊📊
@@ -50,6 +51,10 @@ export const updateSessionReservation = async (id, payload) => {
 // 📊📊delete📊📊
 export const deleteSessionReservation = async (id) => {
   try {
+    await Order.updateMany(
+      { workshopReservations: id },
+      { $pull: { workshopReservations: id } },
+    );
     await SessionReservation.findByIdAndDelete(id);
     return id;
   } catch (error) {

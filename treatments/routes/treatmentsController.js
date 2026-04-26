@@ -3,7 +3,7 @@ import {
   createTreatmentService,
   deleteTreatmentService,
   getAllTreatmentsService,
-  getOneByIdService,
+  getOneTreatmentByIdService,
   updateTreatmentService,
 } from "../services/treatmentsService.js";
 
@@ -37,7 +37,7 @@ treatmentRouter.post("/", async (req, res) => {
 treatmentRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const Treatment = await getOneByIdService(id);
+    const Treatment = await getOneTreatmentByIdService(id);
     res.status(200).send(Treatment);
   } catch (error) {
     res.status(404).send(error.message);

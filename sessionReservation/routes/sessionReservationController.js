@@ -5,6 +5,7 @@ import {
   updateSessionReservationService,
   getAllSessionReservationsService,
   getOneByIdService,
+  deleteSessionReservationService,
 } from "../services/sessionReservationService.js";
 
 const sessionReservationRouter = express.Router();
@@ -51,12 +52,24 @@ sessionReservationRouter.post("/", async (req, res) => {
 sessionReservationRouter.put("/:id", async (req, res) => {
   const payload = req.body;
   const { id } = req.params;
+
   try {
     const updatedSessionReservation = await updateSessionReservationService(
       id,
       payload,
     );
     res.status(200).send(updatedSessionReservation);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// ✔️✔️DELETE✔️✔️
+sessionReservationRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await deleteSessionReservationService(id);
+    res.status(200).send(id);
   } catch (error) {
     console.log(error);
   }

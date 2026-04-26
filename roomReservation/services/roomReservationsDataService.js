@@ -1,3 +1,4 @@
+import Order from "../../orders/models/Order.js";
 import RoomReservation from "../models/RoomReservation.js";
 
 // 📊📊get all📊📊
@@ -51,7 +52,12 @@ export const updateRoomReservation = async (id, payload) => {
 // 📊📊delete📊📊
 export const deleteRoomReservation = async (id) => {
   try {
+    await Order.updateMany(
+      { roomReservations: id },
+      { $pull: { roomReservations: id } },
+    );
     await RoomReservation.findByIdAndDelete(id);
+
     return id;
   } catch (error) {
     console.log(error);

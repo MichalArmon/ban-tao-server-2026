@@ -1,3 +1,4 @@
+import { createOrderService } from "../../orders/services/ordersService.js";
 import Room from "../../rooms/models/Room.js";
 import {
   createRoomReservation,
@@ -59,9 +60,43 @@ export const createRoomReservationService = async (newRoomReservation) => {
 };
 
 // 💼💼update💼💼
+// export const updateRoomReservationService = async (id, payload) => {
+//   try {
+//     const existingReservation = await getOneById(id);
+//     const wasConfirmed = existingReservation.status === "confirmed";
+
+//     const updatedRoomReservation = await updateRoomReservation(id, payload);
+
+//     // 👇 הוספנו הדפסות כדי לראות מה המצב האמיתי
+//     console.log("--- DEBUG ROOM RESERVATION ---");
+//     console.log("wasConfirmed (Old Status):", wasConfirmed);
+//     console.log("New Status:", updatedRoomReservation.status);
+
+//     if (!wasConfirmed && updatedRoomReservation.status === "confirmed") {
+//       console.log("Condition met! Calling createOrderService...");
+//       await createOrderService(updatedRoomReservation, "room");
+//     } else {
+//       console.log("Condition NOT met! Skipping order creation.");
+//     }
+
+//     return updatedRoomReservation;
+//   } catch (error) {
+//     console.log("Error in updateRoomReservationService:", error);
+//     throw error;
+//   }
+// };
 export const updateRoomReservationService = async (id, payload) => {
   try {
+    const existingReservation = await getOneById(id);
+
+    const wasConfirmed = existingReservation.status === "confirmed";
+
     const updatedRoomReservation = await updateRoomReservation(id, payload);
+
+    if (!wasConfirmed && updatedRoomReservation.status === "confirmed") {
+      await createOrderService(updatedRoomReservation, "room");
+    }
+
     return updatedRoomReservation;
   } catch (error) {
     console.log(error);

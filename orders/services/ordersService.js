@@ -1,3 +1,4 @@
+import Order from "../models/Order.js";
 import {
   createOrder,
   deleteOrder,
@@ -28,10 +29,51 @@ export const getOneByIdService = async (id) => {
   }
 };
 // 💼💼create💼💼
-export const createOrderService = async (newOrder) => {
+// export const createOrderService = async (newOrder) => {
+//   try {
+//     const newOrderForController = await createOrder(newOrder);
+//     return newOrderForController;
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// };
+
+export const createOrderService = async (reservation, reservationType) => {
   try {
-    const newOrderForController = await createOrder(newOrder);
-    return newOrderForController;
+    if (!reservation || !reservation._id) {
+      throw new Error("Invalid reservation object");
+    }
+    const fieldMap = {
+      room: "roomReservations",
+      workshop: "workshopReservations",
+      spa: "spaReservations",
+    };
+
+    const reservationField = fieldMap[reservationType];
+    if (!reservationField) {
+      throw new Error(`Invalid reservation type: ${reservationType}`);
+    }
+    // 🔍 בדיקה אם כבר קיים
+    const existingOrder = await Order.findOne({
+      [reservationField]: reservation._id,
+    });
+
+    if (existingOrder) {
+      return existingOrder;
+    }
+
+    // 🧾 יצירה
+    const newOrder = {
+      userId: reservation.userId,
+      [reservationField]: [reservation._id],
+      totalPrice: reservation.price || 0,
+      currency: reservation.currency || "USD",
+    };
+
+    const createdOrder = await createOrder(newOrder);
+
+    return createdOrder;
   } catch (error) {
     console.log(error);
     throw error;

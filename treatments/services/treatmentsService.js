@@ -18,7 +18,7 @@ export const getAllTreatmentsService = async () => {
 };
 
 // 💼💼get one by id💼💼
-export const getOneByIdService = async (id) => {
+export const getOneTreatmentByIdService = async (id) => {
   try {
     const treatment = await getOneTreatmentById(id);
     return treatment;

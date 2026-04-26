@@ -1,3 +1,4 @@
+import { createOrderService } from "../../orders/services/ordersService.js";
 import Session from "../../sessions/models/Session.js";
 import {
   createSessionReservation,
@@ -63,10 +64,18 @@ export const createSessionReservationService = async (
 // 💼💼update💼💼
 export const updateSessionReservationService = async (id, payload) => {
   try {
+    const existingReservation = await getOneById(id);
+    const wasConfirmed = existingReservation.status === "confirmed";
+
     const updatedSessionReservation = await updateSessionReservation(
       id,
       payload,
     );
+
+    if (!wasConfirmed && updatedSessionReservation.status === "confirmed") {
+      await createOrderService(updatedSessionReservation, "workshop");
+    }
+
     return updatedSessionReservation;
   } catch (error) {
     console.log(error);

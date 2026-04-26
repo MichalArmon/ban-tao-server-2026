@@ -5,6 +5,7 @@ import {
   updateRoomReservationService,
   getAllRoomReservationsService,
   getOneByIdService,
+  deleteRoomReservationService,
 } from "../services/roomReservationService.js";
 
 const roomReservationRouter = express.Router();
@@ -56,6 +57,17 @@ roomReservationRouter.put("/:id", async (req, res) => {
       payload,
     );
     res.status(200).send(updatedRoomReservation);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// ✔️✔️DELETE✔️✔️
+roomReservationRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await deleteRoomReservationService(id);
+    res.status(200).send(id);
   } catch (error) {
     console.log(error);
   }

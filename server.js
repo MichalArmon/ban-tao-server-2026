@@ -13,6 +13,7 @@ import orderRouter from "./orders/routes/ordersController.js";
 import sessionRouter from "./sessions/routes/sessionsController.js";
 import recurringRuleRouter from "./recurringRules/routes/recurringRulesController.js";
 import sessionReservationRouter from "./sessionReservation/routes/sessionReservationController.js";
+import treatmentReservationRouter from "./treatmentReservation/routes/TreatmentReservationsController.js";
 
 const app = express();
 const port = 8000;
@@ -25,6 +26,7 @@ app.use("/treatments", treatmentRouter);
 app.use("/workshops", workshopRouter);
 app.use("/room-reservations", roomReservationRouter);
 app.use("/workshop-reservations", sessionReservationRouter);
+app.use("/treatment-reservations", treatmentReservationRouter);
 app.use("/orders", orderRouter);
 app.use("/workshop-sessions", sessionRouter);
 

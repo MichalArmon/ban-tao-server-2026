@@ -22,17 +22,17 @@ OrderRouter.get("/", async (req, res) => {
 });
 
 // ✔️✔️CREATE✔️✔️
-OrderRouter.post("/", async (req, res) => {
-  const newOrder = req.body;
-  try {
-    const newOrderForMongo = await createOrderService(newOrder);
+// OrderRouter.post("/", async (req, res) => {
+//   const newOrder = req.body;
+//   try {
+//     const newOrderForMongo = await createOrderService(newOrder);
 
-    res.status(201).send(newOrderForMongo);
-  } catch (error) {
-    console.log(error);
-    res.status(400).send(error.message);
-  }
-});
+//     res.status(201).send(newOrderForMongo);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).send(error.message);
+//   }
+// });
 
 // ✔️✔️GET one by ID✔️✔️
 
