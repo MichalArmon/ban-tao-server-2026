@@ -7,7 +7,6 @@ import {
   getOneByIdService,
   updateTreatmentReservationService,
 } from "../services/treatmentReservationsService.js";
-import TreatmentReservation from "../models/TreatmentReservation.js";
 
 const treatmentReservationRouter = express.Router();
 
@@ -87,7 +86,7 @@ treatmentReservationRouter.post("/", async (req, res) => {
 
 // ✔️✔️GET one by ID✔️✔️
 
-treatmentReservationRouter.get("/id/:id", async (req, res) => {
+treatmentReservationRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const treatmentReservation = await getOneByIdService(id);

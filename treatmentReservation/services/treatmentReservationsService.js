@@ -34,6 +34,7 @@ export const getOneByIdService = async (id) => {
 export const createTreatmentReservationService = async (
   newTreatmentReservation,
 ) => {
+  const expiresInMinutes = 10;
   try {
     const treatmentId = newTreatmentReservation.treatmentId;
     const treatment = await getOneTreatmentById(treatmentId);
@@ -42,6 +43,7 @@ export const createTreatmentReservationService = async (
       ...newTreatmentReservation,
       priceAtBooking: treatment.price,
       durationAtBooking: treatment.duration,
+      expiresAt: new Date(Date.now() + expiresInMinutes * 60 * 1000),
     };
     const finalTreatmentReservation = await createTreatmentReservation(
       newTreatmentReservationForController,
