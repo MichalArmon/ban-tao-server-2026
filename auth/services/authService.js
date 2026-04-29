@@ -1,7 +1,5 @@
 import { verifyToken } from "../providers/jwtProvider.js";
 
-import { verifyToken } from "../providers/jwtProvider.js";
-
 export const auth = (req, res, next) => {
   const token = req.header("x-auth-token");
 

@@ -8,6 +8,7 @@ import {
   updateUserService,
 } from "../services/UsersService.js";
 import { loginService } from "../services/usersService.js";
+import { auth } from "../../auth/services/authService.js";
 
 const userRouter = express.Router();
 
@@ -44,6 +45,29 @@ userRouter.post("/login", async (req, res) => {
     res.status(401).json({ message: "email or password are not correct" });
   }
 });
+// ✔️✔️GET MY FAVORITES ✔️✔️
+
+userRouter.get("/my-favorites", auth, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await getOneByIdService(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const userFavorites = user.favorites || {
+      rooms: [],
+      treatments: [],
+      workshops: [],
+    };
+
+    res.status(200).json(userFavorites);
+  } catch (error) {
+    console.error("Error fetching favorites:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 // ✔️✔️GET one by ID✔️✔️
 
@@ -78,6 +102,46 @@ userRouter.delete("/:id", async (req, res) => {
     res.status(200).send(id);
   } catch (error) {
     console.log(error);
+  }
+});
+// ✔️✔️LIKE✔️✔️
+
+userRouter.patch("/like", auth, async (req, res) => {
+  try {
+    const { entityId, entityType } = req.body;
+
+    const userId = req.user._id;
+
+    const validTypes = ["rooms", "treatments", "workshops"];
+    if (!validTypes.includes(entityType)) {
+      return res
+        .status(400)
+        .json({ message: "Not allowed! Invalid entity type." });
+    }
+
+    const user = await getOneByIdService(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isFavorite = user.favorites[entityType].includes(entityId);
+
+    if (isFavorite) {
+      user.favorites[entityType].pull(entityId);
+    } else {
+      user.favorites[entityType].push(entityId);
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      message: isFavorite ? "Removed from favorites" : "Added to favorites",
+      favorites: user.favorites,
+    });
+  } catch (error) {
+    console.error("Error toggling favorite:", error);
+    // תיקון התחביר: שליחת תגובה מסודרת
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

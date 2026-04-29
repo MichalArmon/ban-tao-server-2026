@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { EMAIL, PHONE } from "../../helpers/mongooseValidators.js";
+import { Favorites } from "../../helpers/subModels/favorites.js";
 
 const userSchema = new Schema(
   {
@@ -18,6 +19,10 @@ const userSchema = new Schema(
     birthDate: {
       type: Date, // אנחנו מסבירים למסד הנתונים שזה לא סתם טקסט, אלא תאריך
       required: true, // זה אומר שאי אפשר להירשם בלי לספק תאריך לידה
+    },
+    favorites: {
+      type: Favorites,
+      default: () => ({ rooms: [], treatments: [], workshops: [] }),
     },
   },
 
