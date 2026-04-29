@@ -54,3 +54,14 @@ export const deleteWorkshop = async (id) => {
     throw error;
   }
 };
+
+// 📊📊get one by slug📊📊
+export const getOneBySlug = async (slug) => {
+  try {
+    const workshop = await Workshop.findOne({ slug: slug });
+    return workshop;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

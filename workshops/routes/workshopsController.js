@@ -6,6 +6,7 @@ import {
   getAllWorkshopsService,
   getOneByIdService,
   updateWorkshopService,
+  getOneBySlugService,
 } from "../services/workshopsService.js";
 
 const workshopRouter = express.Router();
@@ -30,6 +31,17 @@ workshopRouter.post("/", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
+  }
+});
+// ✔️✔️GET one by SLUG✔️✔️
+
+workshopRouter.get("/:slug", async (req, res) => {
+  const { slug } = req.params;
+  try {
+    const workshop = await getOneBySlugService(slug);
+    res.status(200).send(workshop);
+  } catch (error) {
+    res.status(404).send("workshop not found!");
   }
 });
 

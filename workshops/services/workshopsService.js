@@ -4,6 +4,7 @@ import {
   getAllWorkshops,
   getOneWorkshopById,
   updateWorkshop,
+  getOneBySlug,
 } from "./workshopsDataService.js";
 
 // 💼💼get all💼💼
@@ -46,6 +47,17 @@ export const updateWorkshopService = async (id, payload) => {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+};
+
+// 💼💼get one by slug💼💼
+export const getOneBySlugService = async (slug) => {
+  try {
+    const workshop = await getOneBySlug(slug);
+    return workshop;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 };
 
