@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
 
-export const connectToDB = () => {
-  mongoose
-    .connect("mongodb://127.0.0.1:27017/resort_2026")
-    .then(() => console.log("connected to mongo locally"))
-    .catch((error) => `could not connect to mongoDb:${error}`);
+export const connectToDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("Connected to MongoDB Atlas successfully!");
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    throw error;
+  }
 };
