@@ -6,7 +6,7 @@ import {
   getAllUsersService,
   getOneByIdService,
   updateUserService,
-} from "../services/UsersService.js";
+} from "../services/usersService.js";
 import { loginService } from "../services/usersService.js";
 import { auth } from "../../auth/services/authService.js";
 
