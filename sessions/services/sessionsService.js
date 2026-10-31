@@ -5,7 +5,7 @@ import {
   getAllSessions,
   getOneById,
   updateSession,
-} from "./SessionsDataService.js";
+} from "./sessionsDataService.js";
 
 // 💼💼get all💼💼
 export const getAllSessionsService = async () => {
